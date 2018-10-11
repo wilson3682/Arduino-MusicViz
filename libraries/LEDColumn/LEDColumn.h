@@ -9,16 +9,17 @@ class LEDColumn
   public:
   /* Constructor */
 	  LEDColumn(void);
-    LEDColumn(int evenOdd, int startingLED);
+    LEDColumn(int columnNumber);
 
-    void update column(double *FFT_DATA CRGB *leds);
+    void updateColumn(double *FFT_DATA, CRGB *leds);
     boolean isUpsideDown();
   private:
+    int columnHeight;
+    int computeHeight(double *FFT_DATA);
+    int columnNumber;
     int startingLED;
     boolean upsideDown;
     int height;
-    int _Odd;
-
     
 };
 

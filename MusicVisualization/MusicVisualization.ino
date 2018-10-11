@@ -31,9 +31,8 @@ void setup()
   //sets up each LED Column
   for (int i = 0; i < 10; i++)
   {
-    int evenOdd = (i % 2);
-    LEDColumns1[i] = *(new LEDColumn(evenOdd));
-    LEDColumns2[i] = *(new LEDColumn(evenOdd));
+    LEDColumns1[i] = *(new LEDColumn(i));
+    LEDColumns2[i] = *(new LEDColumn(i));
   }
   //make the bottom of every column light up
   for (int i = 0; i < 10; i++) {
@@ -68,15 +67,7 @@ void loop()
 
   //get the max value of the magnitude and pass it to LEDColumn to compute
   for (int i = 0; i < 20; i++) {
-    double max = 0;
-    for (int j = 0; j < (SAMPLES / 20); j++) {
-      double currentReal = vReal[((SAMPLES / 20) * i + j)];
 
-      if (currentReal > max) {
-        max = currentReal;
-      }
-    }
-    double computedMax = log(max * max * max);
     if (i < 10) {
       //the height of the LED columns must have increased
       if (LEDColumns1[i].computeHeight(computedMax) > 0) {

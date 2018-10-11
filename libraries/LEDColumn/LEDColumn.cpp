@@ -5,24 +5,37 @@
 LEDColumn::LEDColumn(void)
 {
 }
-LEDColumn::LEDColumn(int evenOdd)
+LEDColumn::LEDColumn(int columnNumber, int columnHeight)
 {
-    upsideDown = evenOdd > 0 ? true : false;
+    //Starting LED is based off of the # of LEDS in each column and the column posisition
+    this->columnNumber = columnNumber;
+    this->columnHeight = columnHeight;
+    startingLED = columnNumber * columnHeight;
+    upsideDown = columnNumber % 2 > 0 ? true : false;
     height = 0;
 }
 boolean LEDColumn::isUpsideDown()
 {
-    return (_Odd == 1);
+    return upsideDown;
 }
-// return the height
 
+int LEDCOLUMN::computeHeight(double FFTData[], FFTSize){
+    //loop through the FFT data to get the max data point
+    // corresponding to this column's frequency
+    double max = 1;
+    for(int i = 0; i < FFTSize / 20; i++){
+        double currentData = FFTData[(columnNumber * (FFTSize / 20) + i)];
+        if(currentReal > max){
+            max = currentReal;
+        }
+    }
+    return log(max * max * max);
+}
 /**
- * calculate the new height of the columns based on whether it is incremented or decremented
- * return 1 if the height is incremented, -1 if it is decremented, or 0 if it stays the same
+ *  Update the LED's of the column. The height of the column is based off of the FFT_data array that is passed in.
+ * 
  */
 
-int LEDColumn::computeHeight(double *FFT_data, CRGB *leds)
-{
-    //get the 
-
+int LEDColumn::updateColumn(double FFTData[], int FFTSize,  CRGB leds[], int CRGBSize){
+    height = computeHeight(FFTSize);
 }
